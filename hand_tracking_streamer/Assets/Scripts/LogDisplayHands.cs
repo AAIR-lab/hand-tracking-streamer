@@ -54,7 +54,12 @@ public class LogDisplayHands : MonoBehaviour
 
     private void DisplayLog()
     {
-        if (LogManager.Instance == null) return;
+        if (LogManager.Instance == null ||
+            (AppManager.Instance != null && !AppManager.Instance.ShowDebugInfo))
+        {
+            SetText(string.Empty);
+            return;
+        }
 
         // 1. Get the raw list of messages for this source
         var messages = LogManager.Instance.GetLogMessages(logSource);
